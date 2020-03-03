@@ -65,7 +65,7 @@
     "prettier": "^1.14.3",
     "prettier-eslint-cli": "^4.7.1",
     "tape": "^4.7.0",
-    "webpack-dev-server": "^2.6.1"
+    "webpack-dev-server": "^3.1.11"
   },
   "browser": {
     "fs": false
