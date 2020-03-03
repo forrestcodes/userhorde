@@ -1,0 +1,34 @@
+{
+  "name": "user_horde",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "postinstall": "cd ./client && yarn install",
+    "test": "yarn run build:test && yarn run lint && rspec",
+    "lint": "cd client && yarn run lint",
+    "build:clean": "rm -rf public/webpack || true",
+    "build:test": "(cd client && yarn run build:test)",
+    "build:production:client": "(cd client && yarn run build:production:client)",
+    "build:production:server": "(cd client && yarn run build:production:server)",
+    "build:client": "(cd client && yarn run build:client)",
+    "build:server": "(cd client && yarn run build:server)",
+    "build:dev:client": "(cd client && yarn run build:dev:client)",
+    "build:dev:server": "(cd client && yarn run build:dev:server)",
+    "hot-assets": "(cd client && yarn run hot-assets)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/forrestcodes/userhorde.git"
+  },
+  "keywords": [
+    "react",
+    "rails"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": ""
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
