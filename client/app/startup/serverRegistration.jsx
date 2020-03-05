@@ -1,13 +1,16 @@
 import '@babel/polyfill';
 import 'es5-shim';
 
-// Shows the mapping from the exported object to the name used by the server rendering.
 import ReactOnRails from 'react-on-rails';
+import UserHordeApp from '../components/UserHordeApp'
+import LoginApp from '../components/sessions/LoginApp'
+import LoginForm from '../components/sessions/LoginForm'
 
-ReactOnRails.register({
-
+ReactOnRails.setOptions({
 });
 
-ReactOnRails.registerStore({
-
+ReactOnRails.register({
+  UserHordeApp: UserHordeApp,
+  LoginApp: LoginApp,
+  LoginForm: LoginForm
 });

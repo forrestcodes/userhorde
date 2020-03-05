@@ -49,6 +49,7 @@ module.exports = merge.strategy({
       },
       {
         test: /\.css$/,
+        include: '/app',
         use: [
           'style-loader',
           {
