@@ -1,4 +1,11 @@
 class ApplicationController < ActionController::Base
+
+  def verify_authorized
+    if current_account.blank?
+      redirect_to root_path, alert: 'Please Sign In.'
+    end
+  end
+
   def current_account
     @current_account ||= Account.find_by_id(session[:account_id])
   end

@@ -12,16 +12,7 @@ export default class LoginForm extends React.Component {
                     <input type="text" name="login" id="login"
                            className="form-control"
                            onChange={this.props.onInputChange}
-                           value={this.props.account.login}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="phone">Phone</label>
-                    <input type="text" name="phone" id="phone"
-                           className="form-control"
-                           onChange={this.props.onInputChange}
-                           value={this.props.account.phone}
+                           value={this.props.session.login}
                     />
                   </div>
 
@@ -30,7 +21,7 @@ export default class LoginForm extends React.Component {
                     <input type="password" name="password" id="password"
                            className="form-control"
                            onChange={this.props.onInputChange}
-                           value={this.props.account.password}
+                           value={this.props.session.password}
                     />
                   </div>
 

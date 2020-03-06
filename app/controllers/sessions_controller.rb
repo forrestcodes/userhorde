@@ -1,4 +1,8 @@
 class SessionsController < ApplicationController
+  def new
+    redirect_to users_path if current_account.present?
+  end
+
   def create
     account = Account.find_by_login(session_params[:login])
 
