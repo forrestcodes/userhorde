@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :login_using_api_token
 
   def verify_authorized
     if current_account.blank?
@@ -18,4 +19,13 @@ class ApplicationController < ActionController::Base
     render json: {status: status, success: false}.merge!(meta_data)
   end
 
+  def login_using_api_token
+    unless current_account.present?
+      puts "Login via token"
+      account = Account.find_by_api_token(params[:api_token])
+      if account
+        session[:account_id] = account.id
+      end
+    end
+  end
 end

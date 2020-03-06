@@ -1,38 +1,29 @@
 import React from 'react';
-import LoginApp from "./sessions/LoginApp";
+import NavBar from "./shared/NavBar";
 
 export default class UserHordeApp extends React.Component {
   constructor(props){
     super(props);
 
     this.state = {
-      account: {},
+      account: this.props.account,
       userList: [],
       currentView: this.setInitialView()
     };
   };
 
   setInitialView = () => {
-    return this.props.account && this.props.account.id ? 'userList' : 'login';
+    return 'userList'
+    // return this.props.account && this.props.account.id ? 'userList' : 'login';
   };
 
   renderCurrentView = () => {
     switch (this.state.currentView) {
-      case 'login':
-        return this.renderLoginPage();
       case 'userList':
         return this.renderUsersList();
       default:
-        return this.renderLoginPage();
+        return this.renderUsersList();
     }
-  };
-
-  setAccount = (account) => {
-    this.setState({account: {...this.state.account, account}})
-  };
-
-  renderLoginPage = () => {
-    return <LoginApp onLoginSuccess={this.setAccount}/>
   };
 
   renderUsersList = () => {
@@ -45,6 +36,11 @@ export default class UserHordeApp extends React.Component {
   };
 
   render() {
-    return (this.renderCurrentView());
+    return (
+        <div>
+          <NavBar account={this.props.account}/>
+          {this.renderCurrentView()}
+        </div>
+    );
   }
 }
