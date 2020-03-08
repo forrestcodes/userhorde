@@ -5,6 +5,10 @@ class UsersController < ApplicationController
     @users = current_account.users.search(search_params).page(search_params[:page]).per(25)
     @total_pages = @users.total_pages
 
+    # If this expands past a one liner we'll use a proper serializer.
+    @users = @users.as_json(methods: [:created_at_formatted, :updated_at_formatted])
+
+
     respond_to do |f|
       f.html
       f.json do

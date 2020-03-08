@@ -2,6 +2,7 @@ import React from 'react';
 import NavBar from "./shared/NavBar";
 import UserList from "./users/UserList";
 import {setHeaders} from "../helpers/RequestHelpers";
+import UserSearchForm from "./users/UserSearchForm";
 
 export default class UserHordeApp extends React.Component {
   constructor(props){
@@ -16,7 +17,8 @@ export default class UserHordeApp extends React.Component {
       order: {
         attribute: 'updated_at',
         direction: 'desc'
-      }
+      },
+      q: ''
     };
   };
 
@@ -25,8 +27,15 @@ export default class UserHordeApp extends React.Component {
   };
 
   getUsers = () => {
+    let search = this.state.q;
+    let url = `/users?page=${this.state.currentPageNum}&sort_attr=${this.state.order.attribute}&sort_dir=${this.state.order.direction}`;
+
+    if (search && search.length > 0) {
+      url = `${url}&q=${search}`
+    }
+
     let fetchUsers = $.ajax({
-      url: `/users?page=${this.state.currentPageNum}&sort_attr=${this.state.order.attribute}&sort_dir=${this.state.order.direction}`,
+      url: url,
       type: 'GET',
       headers: setHeaders(),
       dataType: 'json',
@@ -74,16 +83,33 @@ export default class UserHordeApp extends React.Component {
     });
   };
 
+  onSearchSubmit = (e) => {
+    if (e) e.preventDefault();
+    this.getUsers();
+  };
+
+  onSearchInputChange = (e) => {
+      let {value} = e.target;
+      this.setState({q: value})
+  };
+
   renderUsersList = () => {
     return (
-        <UserList
-            account={this.state.account}
-            users={this.state.users}
-            pageCount={this.state.userPageCount}
-            onPageChange={this.changeUserListPage}
-            order={this.state.order}
-            reOrderUsers={this.reOrderUserList}
-        />
+        <div>
+          <UserSearchForm
+              onsubmit={this.onSearchSubmit}
+              q={this.state.q}
+              onChange={this.onSearchInputChange}
+          />
+          <UserList
+              account={this.state.account}
+              users={this.state.users}
+              pageCount={this.state.userPageCount}
+              onPageChange={this.changeUserListPage}
+              order={this.state.order}
+              reOrderUsers={this.reOrderUserList}
+          />
+        </div>
     )
   };
 

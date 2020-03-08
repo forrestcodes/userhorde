@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
     if params[:q].present?
       QUERY_FIELDS.each do |field|
-        search << "#{field} ILIKE %#{params[q]}%"
+        search << "#{field} ILIKE '%#{params[:q]}%'"
       end
     end
 
@@ -28,4 +28,13 @@ class User < ApplicationRecord
       DEFAULT_ORDER
     end
   end
+
+  def created_at_formatted
+    self[:created_at].strftime("%m/%d/%Y %r")
+  end
+
+  def updated_at_formatted
+    self[:updated_at].strftime("%m/%d/%Y %r")
+  end
+
 end

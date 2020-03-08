@@ -17,8 +17,8 @@ const UserListRow = (props) => {
           <td>{props.user.title}</td>
           <td>{props.user.phone}</td>
           {activeRow(props.user)}
-          <td>{props.user.created_at}</td>
-          <td>{props.user.updated_at}</td>
+          <td>{props.user.created_at_formatted}</td>
+          <td>{props.user.updated_at_formatted}</td>
         </tr>
     )
   };
