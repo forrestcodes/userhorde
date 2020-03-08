@@ -7,6 +7,7 @@ import LoginApp from '../components/sessions/LoginApp'
 import LoginForm from '../components/sessions/LoginForm'
 import NavBar from '../components/shared/NavBar'
 
+import '../assets/styles/application.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactOnRails.setOptions({

@@ -1,5 +1,7 @@
 import React from 'react';
 import NavBar from "./shared/NavBar";
+import UserList from "./users/UserList";
+import {setHeaders} from "../helpers/RequestHelpers";
 
 export default class UserHordeApp extends React.Component {
   constructor(props){
@@ -7,14 +9,37 @@ export default class UserHordeApp extends React.Component {
 
     this.state = {
       account: this.props.account,
-      userList: [],
-      currentView: this.setInitialView()
+      users: this.props.users || [],
+      currentView: 'userList',
+      userPageCount: this.props.total_pages,
+      currentPageNum: '1',
+      order: {
+        attribute: 'updated_at',
+        direction: 'desc'
+      }
     };
   };
 
-  setInitialView = () => {
-    return 'userList'
-    // return this.props.account && this.props.account.id ? 'userList' : 'login';
+  fetchUsersOptions = (override={}) => {
+
+  };
+
+  getUsers = () => {
+    let fetchUsers = $.ajax({
+      url: `/searches/users?page=${this.state.currentPageNum}&sort_attr=${this.state.order.attribute}&sort_dir=${this.state.order.direction}`,
+      type: 'GET',
+      headers: setHeaders(),
+      contentType: 'application/json'
+    });
+
+    fetchUsers.then((response) => {
+      if (!response.errors && response.users.length) {
+        let users = response.users;
+        this.setState({users})
+      }
+    }, (error) => {
+      console.log(error)
+    })
   };
 
   renderCurrentView = () => {
@@ -26,12 +51,39 @@ export default class UserHordeApp extends React.Component {
     }
   };
 
+  changeUserListPage = (page) => {
+    let currentPageNum = page.selected + 1;
+    if (currentPageNum > this.state.userPageCount) return;
+    this.setState({currentPageNum}, () => {
+      this.getUsers();
+    });
+  };
+
+  reOrderUserList = (attr) => {
+    let order = {...this.state.order};
+
+    if (attr === order.attribute) {
+      order.direction = order.direction === 'desc' ? 'asc' : 'desc'
+    } else {
+      order.attribute = attr;
+      order.direction = 'desc';
+    }
+
+    this.setState({order}, () => {
+      this.getUsers()
+    });
+  };
+
   renderUsersList = () => {
     return (
-        <div>
-          <h1>Hello!</h1>
-          <h4>Here are users.</h4>
-        </div>
+        <UserList
+            account={this.state.account}
+            users={this.state.users}
+            pageCount={this.state.userPageCount}
+            onPageChange={this.changeUserListPage}
+            order={this.state.order}
+            reOrderUsers={this.reOrderUserList}
+        />
     )
   };
 
@@ -39,7 +91,9 @@ export default class UserHordeApp extends React.Component {
     return (
         <div>
           <NavBar account={this.props.account}/>
-          {this.renderCurrentView()}
+          <div className="container-fluid">
+            {this.renderCurrentView()}
+          </div>
         </div>
     );
   }
