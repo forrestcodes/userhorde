@@ -26,16 +26,16 @@ export default class UserHordeApp extends React.Component {
 
   getUsers = () => {
     let fetchUsers = $.ajax({
-      url: `/searches/users?page=${this.state.currentPageNum}&sort_attr=${this.state.order.attribute}&sort_dir=${this.state.order.direction}`,
+      url: `/users?page=${this.state.currentPageNum}&sort_attr=${this.state.order.attribute}&sort_dir=${this.state.order.direction}`,
       type: 'GET',
       headers: setHeaders(),
+      dataType: 'json',
       contentType: 'application/json'
     });
 
     fetchUsers.then((response) => {
       if (!response.errors && response.users.length) {
-        let users = response.users;
-        this.setState({users})
+        this.setState({users: response.users, userPageCount: response.user_page_count})
       }
     }, (error) => {
       console.log(error)
