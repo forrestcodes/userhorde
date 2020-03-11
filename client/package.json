@@ -75,7 +75,6 @@
     "fs": false
   },
   "scripts": {
-    "postinstall": "yarn link react-on-rails",
     "lint": "eslint --ext .js,.jsx .",
     "test": "yarn run build:test && rspec",
     "build:test": "yarn run build:test:client && yarn run build:test:server",
