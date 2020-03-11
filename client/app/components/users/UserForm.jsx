@@ -4,21 +4,23 @@ const UserForm = (props) => {
   return (
       <form onSubmit={(e) => props.onSave('', e)}>
         <div className="form-group">
-          <label>Name</label>
+          <label>Name *</label>
           <input type="text" name="name" id="name" className="form-control"
                  placeholder={'Name'}
                  onChange={props.onInputChange}
                  value={props.user.name}
+                 required={true}
           />
         </div>
 
 
         <div className="form-group">
-          <label>Email</label>
+          <label>Email *</label>
           <input type="text" name="email" id="email" className="form-control"
                  placeholder={'Email'}
                  onChange={props.onInputChange}
                  value={props.user.email}
+                 required={true}
           />
         </div>
 
@@ -34,11 +36,12 @@ const UserForm = (props) => {
 
 
         <div className="form-group">
-          <label>Phone</label>
+          <label>Phone *</label>
           <input type="text" name="phone" id="phone" className="form-control"
                  placeholder={'Phone'}
                  onChange={props.onInputChange}
                  value={props.user.phone}
+                 required={true}
           />
         </div>
 

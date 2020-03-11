@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
   belongs_to :account, inverse_of: :users
   validates_uniqueness_of :email, scope: :account_id
+  validates_presence_of :email, :name, :phone
 
   def self.search(params)
     search = []
