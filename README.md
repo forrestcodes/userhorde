@@ -1,24 +1,15 @@
-# README
+# UserHorde
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Run through the usual Rails setup. 
 
-Things you may want to cover:
+Install the right ruby version, bundle install, etc.
 
-* Ruby version
+For node_modules, `cd client && yarn install`
 
-* System dependencies
+All node modules live under /client along with all other front end concerns. 
+ 
 
-* Configuration
+* Ruby version - 2.6.5 configured to work with RBENV
 
-* Database creation
+* Node Version - 12.10.0
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
