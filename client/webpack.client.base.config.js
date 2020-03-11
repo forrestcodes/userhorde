@@ -3,7 +3,7 @@
 
 const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const { resolve, join } = require('path');
 
 const { assetLoaderRules } = require('./webpack.common.config');
@@ -56,11 +56,7 @@ module.exports = {
     new ManifestPlugin({
       publicPath: output.publicPath,
       writeToFileEmit: true,
-    }),
-    new ExtractTextPlugin({
-      filename: '[name]-[contenthash].css',
-      allChunks: true,
-    }),
+    })
   ],
 
   module: {

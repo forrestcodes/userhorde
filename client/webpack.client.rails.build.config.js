@@ -53,6 +53,7 @@ module.exports = merge(config, {
       },
       {
         test: /\.css$/,
+        include: '/client/app/components',
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [

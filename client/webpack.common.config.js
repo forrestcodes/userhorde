@@ -1,5 +1,4 @@
 const urlFileSizeCutover = 1000; // below 10k, inline, small 1K is to test file loader
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const assetLoaderRules = [
   {
@@ -27,11 +26,8 @@ const assetLoaderRules = [
   },
   {
     test: /\.css$/,
-    use: ExtractTextPlugin.extract({
-      fallback: 'style-loader',
-      use: ['css-loader', 'postcss-loader'],
-    }),
-  },
+    use: ['style-loader', 'css-loader'],
+  }
 ];
 
 module.exports = {
