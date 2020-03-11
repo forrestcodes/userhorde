@@ -3,6 +3,7 @@ class User < ApplicationRecord
   QUERY_FIELDS = %w(name email phone title)
 
   belongs_to :account, inverse_of: :users
+  validates_uniqueness_of :email, scope: :account_id
 
   def self.search(params)
     search = []
@@ -30,11 +31,11 @@ class User < ApplicationRecord
   end
 
   def created_at_formatted
-    self[:created_at].strftime("%m/%d/%Y %r")
+    Time.at(self[:created_at]).strftime("%m/%d/%Y %r")
   end
 
   def updated_at_formatted
-    self[:updated_at].strftime("%m/%d/%Y %r")
+    Time.at(self[:updated_at]).strftime("%m/%d/%Y %r")
   end
 
 end

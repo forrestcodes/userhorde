@@ -6,7 +6,7 @@ const UserList = (props) => {
 
   const renderUserRows = () => {
     let array = props.users.map((user) => {
-      return <UserListRow key={user.id} user={user}/>
+      return <UserListRow key={user.id} user={user} editUser={props.onClickUserRow}/>
     });
     console.log(array);
     return array;

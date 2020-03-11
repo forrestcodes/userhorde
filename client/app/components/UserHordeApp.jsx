@@ -3,6 +3,8 @@ import NavBar from "./shared/NavBar";
 import UserList from "./users/UserList";
 import {setHeaders} from "../helpers/RequestHelpers";
 import UserSearchForm from "./users/UserSearchForm";
+import {Modal, Alert} from 'react-bootstrap';
+import UserForm from "./users/UserForm";
 
 export default class UserHordeApp extends React.Component {
   constructor(props){
@@ -18,12 +20,21 @@ export default class UserHordeApp extends React.Component {
         attribute: 'updated_at',
         direction: 'desc'
       },
-      q: ''
+      q: '',
+      currentUser: this.blankUser(),
+      modalOpen: false,
+      currentUserErrorString: ''
     };
   };
 
-  fetchUsersOptions = (override={}) => {
-
+  blankUser = () => {
+    return {
+      name: '',
+      email: '',
+      title: '',
+      phone: '',
+      active: true,
+    }
   };
 
   getUsers = () => {
@@ -93,14 +104,128 @@ export default class UserHordeApp extends React.Component {
       this.setState({q: value})
   };
 
+  onClickUserRow = (user) => {
+    this.setState({modalOpen: true, currentUser: user})
+  };
+
+  closeModal = () => {
+      this.setState({modalOpen: false, currentUser: this.blankUser(), currentUserErrorString: ''})
+  };
+
+  onCurrentUserInputChange = (e) => {
+      let {name} = e.target;
+      let value;
+      let currentUser = {...this.state.currentUser};
+
+      if (name === 'active') {
+        value = e.target.checked;
+      } else {
+        value = e.target.value;
+      }
+
+      currentUser[name] = value;
+      this.setState({currentUser})
+  };
+
+  currentUserOnSave = (deleteing='delete', e=null) => {
+    if (e) e.preventDefault();
+
+    let currentUser = {...this.state.currentUser};
+      let payload = {user: currentUser};
+      let url, type;
+
+      if (deleteing === 'delete') {
+        url = `/users/${currentUser.id}`;
+        type = 'DELETE'
+      } else if (currentUser.id) {
+        url = `/users/${currentUser.id}`;
+        type = 'PATCH';
+      } else {
+        url = '/users';
+        type = 'POST';
+      }
+
+      let saveUser = $.ajax({
+        url: url,
+        type: type,
+        data: JSON.stringify(payload),
+        headers: setHeaders(),
+        dataType: 'json',
+        contentType: 'application/json'
+      });
+
+      saveUser.then((response) => {
+        if (response.errors) {
+          this.setState({currentUserErrorString: response.errors})
+        } else {
+          this.closeModal();
+          this.getUsers();
+        }
+      }, (errors) => {
+        console.log(errors)
+      })
+  };
+
+  renderUserErrors = () => {
+    let errorString = this.state.currentUserErrorString;
+      if (errorString && errorString.length) {
+        return(
+            <Alert variant="danger">
+              {errorString}
+            </Alert>
+        )
+      }
+  };
+
+  renderDeleteButton = (currentUser) => {
+      if (currentUser.id) {
+        return <button className="btn btn-danger" type='button' onClick={() => this.currentUserOnSave('delete')}>Delete</button>
+      }
+  };
+
+  renderModal = () => {
+    let currentUser = {...this.state.currentUser};
+    let title = currentUser.id ? 'Edit User' : 'Create User';
+
+      return (
+          <Modal show={this.state.modalOpen} onHide={this.closeModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>{title}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {this.renderUserErrors()}
+
+              <UserForm
+                  user={currentUser}
+                  onInputChange={this.onCurrentUserInputChange}
+                  onSave={this.currentUserOnSave}
+              />
+            </Modal.Body>
+            <Modal.Footer>
+              {this.renderDeleteButton(currentUser)}
+              <button className="btn" type='button' onClick={this.closeModal}>Cancel</button>
+              <button className="btn btn-success" onClick={this.currentUserOnSave}>Save</button>
+            </Modal.Footer>
+          </Modal>
+      )
+  };
+
   renderUsersList = () => {
     return (
         <div>
-          <UserSearchForm
-              onsubmit={this.onSearchSubmit}
-              q={this.state.q}
-              onChange={this.onSearchInputChange}
-          />
+          <div className="row">
+            <div className="col col-md-6">
+              <UserSearchForm
+                  onsubmit={this.onSearchSubmit}
+                  q={this.state.q}
+                  onChange={this.onSearchInputChange}
+              />
+            </div>
+            <div className="col col-md-6 text-right mt-3 mb-3">
+              <button type="button" className="btn btn-success" onClick={() => this.onClickUserRow(this.blankUser())}>New User</button>
+            </div>
+          </div>
+
           <UserList
               account={this.state.account}
               users={this.state.users}
@@ -108,6 +233,7 @@ export default class UserHordeApp extends React.Component {
               onPageChange={this.changeUserListPage}
               order={this.state.order}
               reOrderUsers={this.reOrderUserList}
+              onClickUserRow={this.onClickUserRow}
           />
         </div>
     )
@@ -118,7 +244,8 @@ export default class UserHordeApp extends React.Component {
         <div>
           <NavBar account={this.props.account}/>
           <div className="container-fluid">
-            {this.renderCurrentView()}
+            {this.renderUsersList()}
+            {this.renderModal()}
           </div>
         </div>
     );

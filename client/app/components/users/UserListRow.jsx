@@ -11,7 +11,9 @@ const UserListRow = (props) => {
 
   const theUsersRow = () => {
     return(
-        <tr>
+        <tr className="hover clickable"
+            onClick={() => props.editUser(props.user)}
+        >
           <td>{props.user.name}</td>
           <td>{props.user.email}</td>
           <td>{props.user.title}</td>
