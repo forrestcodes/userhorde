@@ -70,6 +70,7 @@ module.exports = merge.strategy({
       },
       {
         test: /\.scss$/,
+        exclude: '/app/assets',
         use: [
           'style-loader',
           {
@@ -92,7 +93,7 @@ module.exports = merge.strategy({
           {
             loader: 'sass-resources-loader',
             options: {
-              resources: './app/assets/styles/app-variables.scss',
+              resources: ['./app/assets/styles/variables.scss'],
             },
           },
         ],

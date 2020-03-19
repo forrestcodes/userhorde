@@ -1,0 +1,40 @@
+@import "../assets/styles/variables";
+
+.btnOutlineDark {
+  composes: btn-outline-dark from global;
+  color: $secondary !important;
+  border-color: $secondary !important;
+  &:hover {
+    color: #fff !important;
+    background-color: $secondary !important;
+    border-color: $secondary !important;
+  }
+}
+
+.btnOutlineSuccess {
+  composes: btn-outline-success from global;
+  color: $primary !important;
+  border-color: $primary !important;
+  &:hover {
+    color: #fff !important;
+    background-color: $primary !important;
+    border-color: $primary !important;
+  }
+}
+
+.btnOutlineDanger {
+  composes: btn-outline-danger from global;
+  color: $danger !important;
+  border-color: $danger !important;
+  &:hover {
+    color: #fff !important;
+    background-color: $danger !important;
+    border-color: $danger !important;
+  }
+}
+
+.navbarDark {
+  composes: navbar-dark from global;
+  background-color: $bg !important;
+  height: 75px;
+}

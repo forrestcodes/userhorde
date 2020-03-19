@@ -1,0 +1,33 @@
+.table {
+  composes: table from global;
+
+  thead {
+    tr {
+      border-bottom: 1px solid #dee2e6;
+
+      th {
+        font-weight: normal;
+        border: none;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        border: none;
+        vertical-align: inherit;
+      }
+    }
+  }
+}
+
+.active {
+  color: #397367;
+
+}
+
+.inactive {
+  color: #B80C09;
+
+}

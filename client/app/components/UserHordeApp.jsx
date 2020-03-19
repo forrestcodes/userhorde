@@ -5,6 +5,7 @@ import {setHeaders} from "../helpers/RequestHelpers";
 import UserSearchForm from "./users/UserSearchForm";
 import {Modal, Alert} from 'react-bootstrap';
 import UserForm from "./users/UserForm";
+import layout from "./userhorde.scss";
 
 export default class UserHordeApp extends React.Component {
   constructor(props){
@@ -179,13 +180,13 @@ export default class UserHordeApp extends React.Component {
 
   renderDeleteButton = (currentUser) => {
       if (currentUser.id) {
-        return <button className="btn btn-danger" type='button' onClick={() => this.currentUserOnSave('delete')}>Delete</button>
+        return <button className={`btn ${layout.btnOutlineDanger} pull-left`} type='button' onClick={() => this.currentUserOnSave('delete')}>Delete</button>
       }
   };
 
   renderModal = () => {
     let currentUser = {...this.state.currentUser};
-    let title = currentUser.id ? 'Edit User' : 'Create User';
+    let title = currentUser.id ? 'Edit User' : 'Create New User';
 
       return (
           <Modal show={this.state.modalOpen} onHide={this.closeModal}>
@@ -202,12 +203,28 @@ export default class UserHordeApp extends React.Component {
               />
             </Modal.Body>
             <Modal.Footer>
-              {this.renderDeleteButton(currentUser)}
-              <button className="btn" type='button' onClick={this.closeModal}>Cancel</button>
-              <button className="btn btn-success" onClick={this.currentUserOnSave}>Save</button>
+              <div className="container">
+
+              <div className="row">
+                <div className="col-6 text-left">
+                  {this.renderDeleteButton(currentUser)}
+                </div>
+
+                <div className="col-6 text-right">
+                  <button className="btn" type='button' onClick={this.closeModal}>Cancel</button>
+                  <button className={`btn ${layout.btnOutlineSuccess}`} onClick={this.currentUserOnSave}>Save</button>
+                </div>
+              </div>
+              </div>
             </Modal.Footer>
           </Modal>
       )
+  };
+
+  onClearSearch = () => {
+      this.setState({q: ''}, () => {
+        this.getUsers();
+      });
   };
 
   renderUsersList = () => {
@@ -219,10 +236,11 @@ export default class UserHordeApp extends React.Component {
                   onsubmit={this.onSearchSubmit}
                   q={this.state.q}
                   onChange={this.onSearchInputChange}
+                  onClearSearch={this.onClearSearch}
               />
             </div>
             <div className="col col-md-6 text-right mt-3 mb-3">
-              <button type="button" className="btn btn-success" onClick={() => this.onClickUserRow(this.blankUser())}>New User</button>
+              <button type="button" className={`btn ${layout.btnOutlineSuccess}`} onClick={() => this.onClickUserRow(this.blankUser())}>New User</button>
             </div>
           </div>
 

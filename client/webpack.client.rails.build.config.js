@@ -72,33 +72,33 @@ module.exports = merge(config, {
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                minimize: true,
-                modules: true,
-                importLoaders: 3,
-                localIdentName: '[name]__[local]__[hash:base64:5]',
-              },
+        exclude: '/app/assets',
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 3,
+              localIdentName: '[name]__[local]__[hash:base64:5]',
             },
-            {
-              loader: 'postcss-loader',
-              options: {
-                plugins: 'autoprefixer',
-              },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: 'autoprefixer',
             },
-            'sass-loader',
-            {
-              loader: 'sass-resources-loader',
-              options: {
-                resources: './app/assets/styles/app-variables.scss',
-              },
+          },
+          {
+            loader: 'sass-loader',
+          },
+          {
+            loader: 'sass-resources-loader',
+            options: {
+              resources: ['./app/assets/styles/variables.scss'],
             },
-          ],
-        }),
+          },
+        ],
       },
       {
         test: require.resolve('react'),

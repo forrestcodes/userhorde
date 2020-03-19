@@ -31,11 +31,19 @@ class User < ApplicationRecord
     end
   end
 
-  def created_at_formatted
+  def created_at_short
+    Time.at(self[:created_at]).strftime("%m/%d/%Y")
+  end
+
+  def created_at_long
     Time.at(self[:created_at]).strftime("%m/%d/%Y %r")
   end
 
-  def updated_at_formatted
+  def updated_at_short
+    Time.at(self[:updated_at]).strftime("%m/%d/%Y")
+  end
+
+  def updated_at_long
     Time.at(self[:updated_at]).strftime("%m/%d/%Y %r")
   end
 

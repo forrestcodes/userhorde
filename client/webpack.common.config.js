@@ -26,6 +26,7 @@ const assetLoaderRules = [
   },
   {
     test: /\.css$/,
+    exclude: '/app/components',
     use: ['style-loader', 'css-loader'],
   }
 ];

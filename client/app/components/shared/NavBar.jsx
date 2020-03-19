@@ -1,5 +1,6 @@
 import React from 'react';
 import {setHeaders} from "../../helpers/RequestHelpers";
+import layout from "../userhorde.scss";
 
 const NavBar = (props) => {
   const signOutLink = () => {
@@ -25,7 +26,7 @@ const NavBar = (props) => {
   };
 
   return (
-      <nav className="navbar navbar-dark bg-dark">
+      <nav className={`navbar ${layout.navbarDark}`}>
         <span className="navbar-brand mb-0 h1">UserHorde</span>
         <ul className="navbar-nav">
           {signOutLink()}

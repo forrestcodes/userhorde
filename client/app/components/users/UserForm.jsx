@@ -1,6 +1,26 @@
 import React from 'react';
+import { Form } from 'react-bootstrap';
 
 const UserForm = (props) => {
+  const timestamps = () => {
+    if (props.user.id) {
+      return (
+          <div className="mt-2">
+            <div className="row">
+              <div className="col">
+                <small>Last Update: {props.user.updated_at_long}</small>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col">
+                <small>Created At: {props.user.created_at_long}</small>
+              </div>
+            </div>
+          </div>
+      )
+    }
+  };
   return (
       <form onSubmit={(e) => props.onSave('', e)}>
         <div className="form-group">
@@ -46,15 +66,16 @@ const UserForm = (props) => {
         </div>
 
 
-        <div className="form-check">
-          <input className="form-check-input" type="checkbox" id="active" name="active"
-                 checked={props.user.active}
-                 onChange={props.onInputChange}
-          />
-          <label className="form-check-label" htmlFor="inlineFormCheck">
-            Active Status?
-          </label>
-        </div>
+        <Form.Check
+            type="switch"
+            id="active"
+            name="active"
+            label="Active?"
+            checked={props.user.active}
+            onChange={props.onInputChange}
+        />
+
+        {timestamps()}
 
       </form>
   )

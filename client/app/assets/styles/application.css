@@ -1,7 +1,40 @@
+/*Basic css to override global Bootstrap*/
+/*When converted to full SASS implementation the !importants will be removed.*/
+
+:root {
+  --primary-color: #67597A;
+  --secondary-color: #7D869C;
+}
+
 .hover {
   cursor: pointer;
 }
 
 .clickable:hover {
   background-color: #e9ecef;
+}
+
+.modal-header {
+  border: none !important;
+  padding-bottom: 0 !important;
+}
+
+.page-item.active .page-link {
+  background-color: var(--secondary-color) !important;
+  border-color: var(--secondary-color) !important;
+}
+
+.black {
+  color: #000 !important;
+}
+
+.custom-control-input:checked~.custom-control-label::before {
+  color: #fff;
+  border-color: var(--primary-color) !important;
+  background-color: var(--primary-color) !important;
+}
+
+.form-control:focus {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 0.2rem rgba(103, 89, 122, 0.42) !important;
 }

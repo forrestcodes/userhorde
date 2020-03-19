@@ -1,10 +1,11 @@
 import React from 'react';
+import layout from "../userhorde.scss";
 
 export default class LoginForm extends React.Component {
     render() {
       return(
           <div className="container-fluid">
-            <div className="row justify-content-center">
+            <div className="row mt-5 justify-content-center">
               <div className="col-sm-4">
                 <form onSubmit={this.props.onSubmit}>
                   <div className="form-group">
@@ -25,7 +26,7 @@ export default class LoginForm extends React.Component {
                     />
                   </div>
 
-                  <button className="btn btn-success">Submit</button>
+                  <button className={`btn ${layout.btnOutlineSuccess}`}>Login</button>
                 </form>
               </div>
             </div>
