@@ -9,6 +9,10 @@
     background-color: $secondary !important;
     border-color: $secondary !important;
   }
+
+  &:focus {
+    box-shadow: $btn-shadow !important;;
+  }
 }
 
 .btnOutlineSuccess {
@@ -20,6 +24,10 @@
     background-color: $primary !important;
     border-color: $primary !important;
   }
+
+  &:focus {
+    box-shadow: $btn-shadow !important;;
+  }
 }
 
 .btnOutlineDanger {
@@ -30,6 +38,10 @@
     color: #fff !important;
     background-color: $danger !important;
     border-color: $danger !important;
+  }
+
+  &:focus {
+    box-shadow: $btn-shadow !important;;
   }
 }
 
