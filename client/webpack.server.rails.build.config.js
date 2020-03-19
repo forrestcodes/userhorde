@@ -66,13 +66,21 @@ module.exports = {
       },
       {
         test: /\.scss$/,
+        exclude: '/app/assets',
         use: [
+          'style-loader',
           {
-            loader: 'css-loader/locals',
+            loader: 'css-loader',
             options: {
               modules: true,
-              importLoaders: 2,
+              importLoaders: 3,
               localIdentName: '[name]__[local]__[hash:base64:5]',
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: 'autoprefixer',
             },
           },
           {
@@ -81,7 +89,7 @@ module.exports = {
           {
             loader: 'sass-resources-loader',
             options: {
-              resources: './app/assets/styles/app-variables.scss',
+              resources: ['./app/assets/styles/variables.scss'],
             },
           },
         ],
